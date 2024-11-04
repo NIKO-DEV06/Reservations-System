@@ -13,14 +13,14 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto) {
-    await this.validatedCreateUserDta(createUserDto);
+    await this.validatedCreateUserDto(createUserDto);
     return this.usersRepository.create({
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, 10),
     });
   }
 
-  private async validatedCreateUserDta(createUserDto: CreateUserDto) {
+  private async validatedCreateUserDto(createUserDto: CreateUserDto) {
     try {
       await this.usersRepository.findOne({ email: createUserDto.email });
     } catch (err) {
